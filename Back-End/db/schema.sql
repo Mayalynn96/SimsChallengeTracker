@@ -1,0 +1,2 @@
+DROP DATABASE IF EXISTS simsChallengeTracker_db;
+CREATE DATABASE simsChallengeTracker_db;
