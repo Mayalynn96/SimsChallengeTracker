@@ -17,7 +17,8 @@ app.use(cors())
 
 
 app.use('/', allRoutes);
-
+app.use(express.static('public'))
+app.use('/images', express.static('images'));
 
 sequelize.sync({ force: false }).then(function() {
     app.listen(PORT, function() {
