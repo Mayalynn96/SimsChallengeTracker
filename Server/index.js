@@ -3,8 +3,6 @@ const allRoutes = require('./controllers');
 const sequelize = require('./config/connection');
 const cors = require("cors")
 
-global.__basedir = __dirname;
-
 const app = express();
 const PORT = process.env.PORT || 3002;
 // Requiring our models for syncing
@@ -19,7 +17,8 @@ app.use(cors())
 
 
 app.use('/', allRoutes);
-
+app.use(express.static('public'))
+app.use('/images', express.static('images'));
 
 sequelize.sync({ force: false }).then(function() {
     app.listen(PORT, function() {

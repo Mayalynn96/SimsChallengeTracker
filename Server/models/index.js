@@ -1,7 +1,7 @@
 const User = require('./User');
-const Expansion = require('./Expansion');
+const Pack = require('./Pack');
 
 module.exports = {
     User,
-    Expansion
+    Pack
 };
