@@ -1,6 +1,7 @@
 require("dotenv").config();
 const sequelize = require("../config/connection.js");
-const {Pack, Career} = require('../models');
+const {Pack, Career, Aspiration} = require('../models');
+const { AspirationData } = require("./aspirations.js");
 const { CareersData } = require("./careers.js");
 const { PacksData } = require("./packs.js");
 
@@ -17,6 +18,11 @@ const seed = async () => {
     const Careers = await Career.bulkCreate(CareersData, { validate: true });
     console.log("--------------------------------------------------------");
     console.log("Careers added");
+
+    // Seeding Aspirations
+    const Aspirations = await Aspiration.bulkCreate(AspirationData, { validate: true});
+    console.log("--------------------------------------------------------");
+    console.log("Aspirations added");
 
     process.exit(1)
 };
