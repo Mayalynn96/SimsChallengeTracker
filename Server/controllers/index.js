@@ -10,4 +10,7 @@ router.use("/api/Packs",PackRoutes);
 const CareerRoutes = require("./careerController")
 router.use("/api/Careers",CareerRoutes);
 
+const AspirationRoutes = require("./AspirationController")
+router.use("/api/Aspirations",AspirationRoutes);
+
 module.exports = router;

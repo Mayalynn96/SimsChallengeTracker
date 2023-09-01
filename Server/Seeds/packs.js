@@ -105,6 +105,41 @@ const PacksData = [
         "year": 2023,
         "name": "Horse Ranch",
         "image": URL_PREFIX + "images/packs/HorseRanch.png"
+    },
+    {
+        "id": 16,
+        "type": "GP",
+        "year": 2015,
+        "name": "Outdoor Retreat",
+        "image": URL_PREFIX + "images/packs/OutdoorRetreat.png"
+    },
+    {
+        "id": 17,
+        "type": "GP",
+        "year": 2015,
+        "name": "Spa Day",
+        "image": URL_PREFIX + "images/packs/SpaDay.png"
+    },
+    {
+        "id": 18,
+        "type": "GP",
+        "year": 2016,
+        "name": "Dine Out",
+        "image": URL_PREFIX + "images/packs/DineOut.png"
+    },
+    {
+        "id": 19,
+        "type": "GP",
+        "year": 2017,
+        "name": "Vampires",
+        "image": URL_PREFIX + "images/packs/Vampires.png"
+    },
+    {
+        "id": 20,
+        "type": "GP",
+        "year": 2017,
+        "name": "Parenthood",
+        "image": URL_PREFIX + "images/packs/Parenthood.png"
     }
 ]
 
