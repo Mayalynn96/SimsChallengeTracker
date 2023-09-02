@@ -5,42 +5,42 @@ const TraitData = [
         "type":"Emotional",
         "pack": "Base Game",
         "name":"Ambitious",
-        "image":"http://localhost:3002/images/careers/Ambitious.png",
+        "image":URL_PREFIX + "/images/careers/Ambitious.png",
         "PackId": 1
     },
     {
         "type":"Emotional",
         "pack": "Base Game",
         "name":"Cheerful",
-        "image":"http://localhost:3002/images/careers/Cheerful.png",
+        "image":URL_PREFIX + "/images/careers/Cheerful.png",
         "PackId": 1
     },
     {
         "type":"Emotional",
         "pack": "Base Game",
         "name":"Childish",
-        "image":"http://localhost:3002/images/careers/Childish.png",
+        "image":URL_PREFIX + "/images/careers/Childish.png",
         "PackId": 1
     },
     {
         "type":"Hobby",
         "pack": "Base Game",
         "name":"Art Lover",
-        "image":"http://localhost:3002/images/careers/ArtLover.png",
+        "image":URL_PREFIX + "/images/careers/ArtLover.png",
         "PackId": 1
     },
     {
         "type":"Hobby",
         "pack": "Base Game",
         "name":"Bookworm",
-        "image":"http://localhost:3002/images/careers/Bookworm.png",
+        "image":URL_PREFIX + "/images/careers/Bookworm.png",
         "PackId": 1
     },
     {
         "type":"Hobby",
         "pack": "Get Together",
         "name":"Dance Machine",
-        "image":"http://localhost:3002/images/careers/DanceMachine.png",
+        "image":URL_PREFIX + "/images/careers/DanceMachine.png",
         "PackId": 3
     }
 ]
