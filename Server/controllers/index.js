@@ -13,4 +13,7 @@ router.use("/api/Careers",CareerRoutes);
 const AspirationRoutes = require("./AspirationController")
 router.use("/api/Aspirations",AspirationRoutes);
 
+const TraitRoutes = require("./TraitController")
+router.use("/api/Traits",TraitRoutes);
+
 module.exports = router;
