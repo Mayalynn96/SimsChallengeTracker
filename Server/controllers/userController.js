@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router();
 
 const {
-    User
+    User,
+    Legacy
 } = require('../models')
 
 const bcrypt = require("bcrypt");
@@ -21,14 +22,22 @@ router.get("/", (req, res) => {
     })
 })
 
-router.get("/user/:username", (req, res) => {
-    User.findOne({ where: { username: req.params.username } }).then(data => {
-        if (data) {
-            return res.json(data)
-        } else {
-            res.status(404).send("No such user")
-        }
-    })
+router.get("/userInfo", async (req, res) => {
+    const token = await req.headers?.authorization?.split(" ")[1];
+    if (!token) {
+        return res.status(403).json({ msg: "you must be logged in to get readings" });
+    }
+    try{
+        const tokenData = await jwt.verify(token, process.env.JWT_SECRET);
+
+        const userInfo = await User.findByPk(tokenData.id, {include : {model: Legacy}})
+
+        res.json(userInfo)
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Error getting all user info.", error: err});
+    }
+
 })
 
 router.post("/", (req, res) => {
