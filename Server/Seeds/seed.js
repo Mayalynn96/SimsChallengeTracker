@@ -31,7 +31,7 @@ const seed = async () => {
     // Seeding Trait
     const Traits = await Trait.bulkCreate(TraitData, { validate: true});
     console.log("--------------------------------------------------------");
-    console.log("Trait added");
+    console.log("Traits added");
     console.log("--------------------------------------------------------");
 
     process.exit(1)
