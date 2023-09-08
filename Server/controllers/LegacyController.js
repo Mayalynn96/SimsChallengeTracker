@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router();
 
 const {
-    Legacy
+    Legacy,
+    Sim
 } = require('../models')
 
 const jwt = require("jsonwebtoken");
@@ -10,7 +11,7 @@ const jwt = require("jsonwebtoken");
 // Getting all Legacies
 router.get("/", async (req, res) => {
     try {
-        const legacyData = await Legacy.findAll()
+        const legacyData = await Legacy.findAll({include: Sim})
         res.json(legacyData)
     } catch (err) {
         console.error(err);
