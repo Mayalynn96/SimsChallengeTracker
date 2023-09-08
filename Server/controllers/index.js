@@ -19,4 +19,7 @@ router.use("/api/Traits",TraitRoutes);
 const LegacyRoutes = require("./LegacyController")
 router.use("/api/Legacies",LegacyRoutes);
 
+const SimRoutes = require("./SimController")
+router.use("/api/Sims",SimRoutes);
+
 module.exports = router;

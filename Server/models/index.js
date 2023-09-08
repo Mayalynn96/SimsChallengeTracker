@@ -4,6 +4,10 @@ const Career = require('./Career');
 const Aspiration = require('./Aspiration');
 const Trait = require('./Trait');
 const Legacy = require('./Legacy');
+const Sim = require('./Sim');
+
+Sim.belongsTo(Legacy);
+Legacy.hasMany(Sim);
 
 Legacy.belongsTo(User);
 User.hasMany(Legacy);
@@ -23,5 +27,6 @@ module.exports = {
     Career,
     Aspiration,
     Trait,
-    Legacy
+    Legacy,
+    Sim
 };
