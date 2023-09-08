@@ -22,4 +22,7 @@ router.use("/api/Legacies",LegacyRoutes);
 const SimRoutes = require("./SimController")
 router.use("/api/Sims",SimRoutes);
 
+const SkillRoutes = require("./SkillController")
+router.use("/api/Skills",SkillRoutes);
+
 module.exports = router;

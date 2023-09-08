@@ -24,7 +24,7 @@ router.post("/", async (req, res) => {
         const newTrait = await Trait.create(req.body);
         res.status(201).json({message: "Trait creation successful", data: newTrait});
     } catch (err) {
-        res.status(500).json({ message: "Error adding Trait.", error: err });
+        res.status(500).json({ message: "Error adding Trait.", error: err.toString() });
     }
 })
 
