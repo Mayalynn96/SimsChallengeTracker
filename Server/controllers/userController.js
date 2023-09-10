@@ -60,7 +60,7 @@ router.post("/", (req, res) => {
         })
         .catch((err) => {
             console.log(err);
-            res.json({ msg: "oh no", err });
+            res.json({message: "Error adding User.", error: err.errors[0].message });
         });
 });
 
