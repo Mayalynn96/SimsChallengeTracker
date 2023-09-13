@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useReducer } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import API from './utils/API';
 import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
+import Legacies from "./pages/Legacies/Legacies";
 import './App.css';
 
 function App() {
@@ -53,6 +54,8 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home authState={authState} setAuthState={setAuthState} />} />
+        <Route path="/home" element={<Home authState={authState} setAuthState={setAuthState} />} />
+        <Route path="/sims4legacies" element={<Legacies authState={authState}/>} />
         <Route path="/login" element={<Login setAuthState={setAuthState} />} />
         <Route path="*" element={<h1>404 page not found</h1>} />
       </Routes>
