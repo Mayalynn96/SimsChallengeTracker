@@ -5,6 +5,8 @@ import './Home.css';
 import Loading from "../../components/Loading/Loading";
 
 function Home({ authState, setAuthState }) {
+
+    // Logout funtion
     const handleLogout = (e) => {
         e.preventDefault();
 
@@ -22,23 +24,34 @@ function Home({ authState, setAuthState }) {
     // Adding useNavigate to navigate to homepage
     const navigate = useNavigate();
 
+    // redirect to login function
     const redirectToLogin = (e) => {
         e.preventDefault();
 
         navigate("/login");
     }
 
+    // redirect to legacies function
     const redirectToLegacies = (e) => {
         e.preventDefault();
 
         navigate("/sims4legacies");
     }
 
-    const getLegacies = async () => {
-        const userLegacies = await API.getUserLegacies(3, authState.token)
-        return console.log(userLegacies)
-    };
+    const [legacies, setLegacies] = useState([])
 
+    useEffect(() => {
+        // get legacies if user is logged in
+        const getLegacies = async () => {
+            if(authState.isLoggedIn){
+                const userLegacies = await API.getUserLegacies(3, authState.token)
+                setLegacies(userLegacies);
+                return console.log(userLegacies)
+            }
+        };
+
+        getLegacies();
+    }, [authState])
 
     if (authState.isLoading) {
         return (
@@ -47,13 +60,22 @@ function Home({ authState, setAuthState }) {
             </main>
         )
     } else if (authState.isLoggedIn) {
-        getLegacies();
         return (
             <main>
-                <h1>Welcome Back {authState.userData.username}</h1>
+                <h1>Welcome {authState.userData.username}</h1>
                 <button onClick={handleLogout}>Logout</button>
                 <div>
                     <h2>Your Legacies</h2>
+                    {legacies.map((legacy, index) => {
+                        return (
+                            <div key={index}>
+                                <h3>{legacy.name.toUpperCase()} Legacy</h3>
+                                <p>Generation: {legacy.generation}</p>
+                                <p>Number of Sims: {legacy.Sims.length}</p>
+                                <button>View</button>
+                            </div>
+                        )
+                    })}
                     <button onClick={redirectToLegacies}>See All</button>
                 </div>
             </main>

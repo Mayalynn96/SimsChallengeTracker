@@ -47,6 +47,14 @@ const API = {
             }
         });
         return await res.json();
+    },
+    getAllUserLegacies: async (token) => {
+        const res = await fetch(`${URL_PREFIX}/api/legacies/allUserlegacies`, {
+            headers: {
+                "authorization": `Bearer ${token}`
+            }
+        });
+        return await res.json();
     }
 }
 

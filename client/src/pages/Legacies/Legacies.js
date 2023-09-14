@@ -15,6 +15,21 @@ function Legacies({ authState }) {
         navigate("/login");
     }
 
+    const [legacies, setLegacies] = useState([])
+
+    useEffect(() => {
+        // get legacies if user is logged in
+        const getLegacies = async () => {
+            if (authState.isLoggedIn) {
+                const userLegacies = await API.getAllUserLegacies(authState.token)
+                setLegacies(userLegacies);
+                return console.log(userLegacies)
+            }
+        };
+
+        getLegacies();
+    }, [authState])
+
     if (authState.isLoading) {
         return (
             <main>
@@ -25,6 +40,33 @@ function Legacies({ authState }) {
         return (
             <main>
                 <h1>All your sims 4 legacies: </h1>
+                <div>
+                    <div>
+                        <h2>Start a new Legacy</h2>
+                        <button>+</button>
+                    </div>
+                    {legacies.map((legacy, index) => {
+                        var currentHeir = "none";
+
+                        legacy.Sims.map(sim => {
+                            if (sim.relationToHeir === "Heir") {
+                                return currentHeir = sim.firstName + " " + sim.lastName
+                            }
+                            return "no"
+                        })
+                        return (
+                            <div key={index}>
+                                <h3>{legacy.name.toUpperCase()} Legacy</h3>
+                                <p>Generation: {legacy.generation}</p>
+                                <p>Number of Sims: {legacy.Sims.length}</p>
+                                <p>Current Heir: {currentHeir}</p>
+                                {legacy.extremeStart && <p>Extreme Start</p>}
+                                {legacy.ultraExtremeStart && <p>Ultra Extreme Start</p>}
+                                <button>View</button>
+                            </div>
+                        )
+                    })}
+                </div>
             </main>
         )
     } else {

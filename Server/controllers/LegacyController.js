@@ -19,8 +19,28 @@ router.get("/", async (req, res) => {
     }
 })
 
-// Get all Legacies by current User
+// Get Legacies by current User with limit
 router.get("/userLegacies", async (req, res) => {
+    const token = req.headers?.authorization?.split(" ")[1];
+    if (!token) {
+        return res.status(403).json({ msg: "you must be logged in to get user Legacies." });
+    } try {
+        const tokenData = jwt.verify(token, process.env.JWT_SECRET);
+
+        const userLegacyData = await Legacy.findAll({
+            where: {UserId: tokenData.id},
+            include: Sim,
+            limit: +req.query.limit
+        })
+        res.json(userLegacyData)
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Error getting user Legacies.", error: err});
+    }
+})
+
+// Get all Legacies by current User
+router.get("/allUserLegacies", async (req, res) => {
     const token = req.headers?.authorization?.split(" ")[1];
     if (!token) {
         return res.status(403).json({ msg: "you must be logged in to get all user Legacies." });
@@ -29,8 +49,7 @@ router.get("/userLegacies", async (req, res) => {
 
         const userLegacyData = await Legacy.findAll({
             where: {UserId: tokenData.id},
-            include: Sim,
-            limit: +req.query.limit
+            include: Sim
         })
         res.json(userLegacyData)
     } catch (err) {
