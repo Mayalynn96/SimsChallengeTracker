@@ -1,41 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import API from "../../utils/API";
 import { useNavigate } from "react-router-dom";
-import './Home.css';
+import './Legacies.css';
 import Loading from "../../components/Loading/Loading";
 
-function Home({ authState, setAuthState }) {
+function Legacies({ authState }) {
 
-    // Logout funtion
-    const handleLogout = (e) => {
-        e.preventDefault();
-
-        localStorage.removeItem("token")
-
-        setAuthState({
-            isLoading: false,
-            isLoggedIn: false,
-            userData: null,
-            token: null,
-            error: null,
-        })
-    }
-
-    // Adding useNavigate to navigate to homepage
+    // Adding useNavigate
     const navigate = useNavigate();
 
-    // redirect to login function
     const redirectToLogin = (e) => {
         e.preventDefault();
 
         navigate("/login");
     }
 
-    // redirect to legacies function
-    const redirectToLegacies = (e) => {
-        e.preventDefault();
-
-        navigate("/sims4legacies");
+    const goToLegacy = (id) => {
+        navigate(`/sims4legacies/legacy/${id}`)
     }
 
     const [legacies, setLegacies] = useState([])
@@ -43,8 +24,8 @@ function Home({ authState, setAuthState }) {
     useEffect(() => {
         // get legacies if user is logged in
         const getLegacies = async () => {
-            if(authState.isLoggedIn){
-                const userLegacies = await API.getUserLegacies(3, authState.token)
+            if (authState.isLoggedIn) {
+                const userLegacies = await API.getAllUserLegacies(authState.token)
                 setLegacies(userLegacies);
                 return console.log(userLegacies)
             }
@@ -62,32 +43,44 @@ function Home({ authState, setAuthState }) {
     } else if (authState.isLoggedIn) {
         return (
             <main>
-                <h1>Welcome {authState.userData.username}</h1>
-                <button onClick={handleLogout}>Logout</button>
+                <h1>All your sims 4 legacies: </h1>
                 <div>
-                    <h2>Your Legacies</h2>
+                    <div>
+                        <h2>Start a new Legacy</h2>
+                        <button>+</button>
+                    </div>
                     {legacies.map((legacy, index) => {
+                        var currentHeir = "none";
+
+                        legacy.Sims.map(sim => {
+                            if (sim.relationToHeir === "Heir") {
+                                return currentHeir = sim.firstName + " " + sim.lastName
+                            }
+                            return "no"
+                        })
                         return (
                             <div key={index}>
                                 <h3>{legacy.name.toUpperCase()} Legacy</h3>
                                 <p>Generation: {legacy.generation}</p>
                                 <p>Number of Sims: {legacy.Sims.length}</p>
-                                <button>View</button>
+                                <p>Current Heir: {currentHeir}</p>
+                                {legacy.extremeStart && <p>Extreme Start</p>}
+                                {legacy.ultraExtremeStart && <p>Ultra Extreme Start</p>}
+                                <button onClick={() => {goToLegacy(legacy.id)}}>View</button>
                             </div>
                         )
                     })}
-                    <button onClick={redirectToLegacies}>See All</button>
                 </div>
             </main>
         )
     } else {
         return (
             <main>
-                <h1>Welcome!</h1>
+                <h1>Please login to see your sims 4 legacies</h1>
                 <button onClick={redirectToLogin}>login</button>
             </main>
         )
     }
 }
 
-export default Home;
+export default Legacies;

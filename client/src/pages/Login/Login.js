@@ -121,7 +121,7 @@ function Login({ setAuthState }) {
                 <div id="loginCard">
                     <form className="loginForm" id="loginForm">
                         {isSigningUp && <input type="text" id="emailInput" placeholder="email" value={emailInput} onChange={handleInputChange} autoComplete='email' /> }
-                        <input type="text" id="usernameInput" placeholder="Username" value={usernameInput} onChange={handleInputChange} />
+                        <input type="text" id="usernameInput" placeholder="Username" value={usernameInput} onChange={handleInputChange} autoComplete='username' />
                         <input type="password" id="passwordInput" placeholder="Password" value={passwordInput} onChange={handleInputChange} autoComplete='current-password' />
                         {isSigningUp && <input type="password" id="secondPasswordInput" placeholder="secondPassword" value={secondPasswordInput} onChange={handleInputChange} autoComplete='secondPassword' /> }
                         {isSigningUp ? <button onClick={handleSignup}>Sign up</button> : <button onClick={handleLogin} >Login</button>}
