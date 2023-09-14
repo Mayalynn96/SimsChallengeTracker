@@ -15,6 +15,10 @@ function Legacies({ authState }) {
         navigate("/login");
     }
 
+    const goToLegacy = (id) => {
+        navigate(`/sims4legacies/legacy/${id}`)
+    }
+
     const [legacies, setLegacies] = useState([])
 
     useEffect(() => {
@@ -62,7 +66,7 @@ function Legacies({ authState }) {
                                 <p>Current Heir: {currentHeir}</p>
                                 {legacy.extremeStart && <p>Extreme Start</p>}
                                 {legacy.ultraExtremeStart && <p>Ultra Extreme Start</p>}
-                                <button>View</button>
+                                <button onClick={() => {goToLegacy(legacy.id)}}>View</button>
                             </div>
                         )
                     })}

@@ -4,6 +4,8 @@ import API from './utils/API';
 import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
 import Legacies from "./pages/Legacies/Legacies";
+import Legacy from "./pages/Legacy/Legacy";
+import NotFound from "./components/NotFound/NotFound";
 import './App.css';
 
 function App() {
@@ -53,11 +55,12 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home authState={authState} setAuthState={setAuthState} />} />
-        <Route path="/home" element={<Home authState={authState} setAuthState={setAuthState} />} />
-        <Route path="/sims4legacies" element={<Legacies authState={authState}/>} />
-        <Route path="/login" element={<Login setAuthState={setAuthState} />} />
-        <Route path="*" element={<h1>404 page not found</h1>} />
+          <Route index element={<Home authState={authState} setAuthState={setAuthState} />} />
+          <Route path="home" element={<Home authState={authState} setAuthState={setAuthState} />} />
+          <Route path="/login" element={<Login setAuthState={setAuthState} />} />
+          <Route path="/sims4legacies" element={<Legacies authState={authState} />} />
+          <Route path="/sims4legacies/legacy/:legacyId" element={<Legacy authState={authState} />} />
+          <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );
