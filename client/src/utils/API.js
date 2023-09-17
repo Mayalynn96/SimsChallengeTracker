@@ -55,6 +55,14 @@ const API = {
             }
         });
         return await res.json();
+    },
+    getLegacyById: async (legacyId, token) => {
+        const res = await fetch(`${URL_PREFIX}/api/legacies/legacy/${legacyId}`, {
+            headers: {
+                "authorization": `Bearer ${token}`
+            }
+        });
+        return await res.json();
     }
 }
 
