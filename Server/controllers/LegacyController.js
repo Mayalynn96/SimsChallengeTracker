@@ -58,6 +58,33 @@ router.get("/allUserLegacies", async (req, res) => {
     }
 })
 
+// Get a legacy by ID and it's associated sims and points
+router.get("/legacy/:legacyId", async (req, res) => {
+    const token = req.headers?.authorization?.split(" ")[1];
+    if (!token) {
+        return res.status(403).json({ msg: "you must be logged in to get this Legacy." });
+    } try {
+        const tokenData = jwt.verify(token, process.env.JWT_SECRET);
+
+        const legacyData = await Legacy.findByPk(req.params.legacyId, {
+            include: Sim
+        })
+
+        if(!legacyData){
+            return res.status(404).json({ msg: "No legacy under this Id." });
+        }
+
+        if(tokenData.id !== legacyData.UserId){
+            return res.status(403).json({ msg: "This legacy doesn't belong to you." });
+        }
+
+        res.json(legacyData)
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Error getting this legacy.", error: err });
+    }
+})
+
 // Adding new Legacy
 router.post("/", async (req, res) => {
     const token = req.headers?.authorization?.split(" ")[1];
