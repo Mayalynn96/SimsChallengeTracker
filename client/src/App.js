@@ -7,6 +7,7 @@ import Legacies from "./pages/Legacies/Legacies";
 import Legacy from "./pages/Legacy/Legacy";
 import NotFound from "./components/NotFound/NotFound";
 import './App.css';
+import Header from "./components/Header/Header";
 
 function App() {
   const [authState, setAuthState] = useState({
@@ -54,12 +55,13 @@ function App() {
 
   return (
     <BrowserRouter>
+    <Header authState={authState} setAuthState={setAuthState}/>
       <Routes>
-          <Route index element={<Home authState={authState} setAuthState={setAuthState} />} />
-          <Route path="home" element={<Home authState={authState} setAuthState={setAuthState} />} />
+          <Route index element={<Home authState={authState} />} />
+          <Route path="/home" element={<Home authState={authState} />} />
           <Route path="/login" element={<Login setAuthState={setAuthState} />} />
-          <Route path="/sims4legacies" element={<Legacies authState={authState} />} />
-          <Route path="/sims4legacies/legacy/:legacyId" element={<Legacy authState={authState} />} />
+          <Route path="/allLegacies" element={<Legacies authState={authState} />} />
+          <Route path="/legacy/:legacyId" element={<Legacy authState={authState} />} />
           <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

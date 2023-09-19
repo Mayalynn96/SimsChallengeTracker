@@ -15,13 +15,6 @@ function Legacy({ authState }) {
         navigate("/login");
     }
 
-    // redirect to legacies function
-    const redirectToLegacies = (e) => {
-        e.preventDefault();
-
-        navigate("/sims4legacies");
-    }
-
     const [legacy, setLegacy] = useState([]);
 
     const { legacyId } = useParams();
@@ -38,7 +31,34 @@ function Legacy({ authState }) {
         };
 
         getLegacy();
-    }, [authState]);
+    }, [authState, legacyId]);
+
+    const [currentSelection, setCurrentSelection] = useState('allSims');
+
+    const RenderSelection = () => {
+        if(currentSelection === "allSims"){
+            return (
+                <div>
+                <h2>Generation 1</h2>
+                {legacy.Sims.map(sim => {
+                    if (sim.generation === 1) {
+                        return (
+                            <div key={sim.id} className={sim.relationToHeir}>
+                                <h3>{sim.firstName} {sim.lastName}</h3>
+                                <p>{sim.gender}</p>
+                                <p>Heir Status: {sim.heirStatus}</p>
+                                <p>{sim.species}</p>
+                                <p>Relation: {sim.relationToHeir}</p>
+                            </div>
+                        )
+                    } else {
+                        return null
+                    }
+                })}
+            </div>
+            )
+        }
+    }
 
     if (authState.isLoading) {
         return (
@@ -46,29 +66,18 @@ function Legacy({ authState }) {
                 <Loading />
             </main>
         )
-    } else if (authState.isLoggedIn && legacy.Sims) {
+    } else if (authState.isLoggedIn && legacy.name) {
 
         return (
             <main>
-                <h1 style={{ textTransform: 'capitalize' }}>{legacy.name} Legacy</h1>
-                <button onClick={redirectToLegacies}>Return to all legacies</button>
-                <button>Add Sim</button>
                 <div>
-                    <h2>Generation 1</h2>
-                    {legacy.Sims.map(sim => {
-                        if (sim.generation === 1) {
-                            return (
-                                <div key={sim.id} className={sim.relationToHeir}>
-                                    <h3>{sim.firstName} {sim.lastName}</h3>
-                                    <p>{sim.gender}</p>
-                                    <p>Heir Status: {sim.heirStatus}</p>
-                                    <p>{sim.species}</p>
-                                    <p>Relation: {sim.relationToHeir}</p>
-                                </div>
-                            )
-                        }
-                    })}
+                    <h1 style={{ textTransform: 'capitalize' }}>{legacy.name} Legacy</h1>
+                    <p>Gender Law: {legacy.genderLaw}</p>
+                    <p>Bloodline Law: {legacy.bloodlineLaw}</p>
+                    <p>Heir Law: {legacy.heirLaw}</p>
+                    <p>Species Law: {legacy.speciesLaw}</p>
                 </div>
+                <RenderSelection />
             </main>
         )
     } else {

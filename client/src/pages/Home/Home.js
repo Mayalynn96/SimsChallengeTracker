@@ -4,22 +4,7 @@ import { useNavigate } from "react-router-dom";
 import './Home.css';
 import Loading from "../../components/Loading/Loading";
 
-function Home({ authState, setAuthState }) {
-
-    // Logout funtion
-    const handleLogout = (e) => {
-        e.preventDefault();
-
-        localStorage.removeItem("token")
-
-        setAuthState({
-            isLoading: false,
-            isLoggedIn: false,
-            userData: null,
-            token: null,
-            error: null,
-        })
-    }
+function Home({ authState }) {
 
     // Adding useNavigate to navigate to homepage
     const navigate = useNavigate();
@@ -35,7 +20,7 @@ function Home({ authState, setAuthState }) {
     const redirectToLegacies = (e) => {
         e.preventDefault();
 
-        navigate("/sims4legacies");
+        navigate("/allLegacies");
     }
 
     const [legacies, setLegacies] = useState([])
@@ -63,7 +48,6 @@ function Home({ authState, setAuthState }) {
         return (
             <main>
                 <h1>Welcome {authState.userData.username}</h1>
-                <button onClick={handleLogout}>Logout</button>
                 <div>
                     <h2>Your Legacies</h2>
                     {legacies.map((legacy, index) => {

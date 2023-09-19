@@ -16,7 +16,7 @@ function Legacies({ authState }) {
     }
 
     const goToLegacy = (id) => {
-        navigate(`/sims4legacies/legacy/${id}`)
+        navigate(`/legacy/${id}`)
     }
 
     const [legacies, setLegacies] = useState([])
