@@ -10,10 +10,8 @@ function AllLegacies({ authState }) {
     const navigate = useNavigate();
 
     // redirect to login function
-    const redirectToLogin = (e) => {
-        e.preventDefault();
-
-        navigate("/login");
+    const redirectTo = (destination) => {
+        navigate(destination)
     }
 
     const goToLegacy = (id) => {
@@ -40,7 +38,7 @@ function AllLegacies({ authState }) {
         return (
             <main>
                 <h1>Please login to see your sims 4 Legacy</h1>
-                <button onClick={redirectToLogin}>login</button>
+                <button onClick={() => {redirectTo("/login")}}>login</button>
             </main>
         )
     } else if (authState.isLoggedIn) {
@@ -50,7 +48,7 @@ function AllLegacies({ authState }) {
                 <div>
                     <div>
                         <h3>Start a new Legacy</h3>
-                        <button>+</button>
+                        <button onClick={() => {redirectTo("/legacies/new")}}>+</button>
                     </div>
                     {legacies.map((legacy, index) => {
                         var currentHeir = "none";

@@ -10,6 +10,9 @@ import Header from "./components/Header/Header";
 import NewLegacy from "./pages/NewLegacy/NewLegacy";
 import LegacyId from "./pages/LegacyId/LegacyId";
 import AllLegacies from "./pages/AllLegacies/AllLegacies";
+import LegacyIndex from "./pages/LegacyIndex/LegacyIndex";
+import Overview from "./pages/Overview/Overview";
+import Family from "./pages/Family/Family";
 
 function App() {
   const [authState, setAuthState] = useState({
@@ -64,8 +67,12 @@ function App() {
         <Route path="login" element={<Login setAuthState={setAuthState} />} />
         <Route path="legacies" element={<Legacies authState={authState} />}>
           <Route index element={<AllLegacies authState={authState} /> }/>
-          <Route path=":legacyId" element={<LegacyId authState={authState} />} />
           <Route path="new" element={<NewLegacy authState={authState} />}/>
+          <Route path=":legacyId" element={<LegacyId authState={authState} />}>
+            <Route index element={<LegacyIndex />} />
+            <Route path="overview" element={<Overview />} />
+            <Route path="family" element={<Family/>} />
+          </Route>
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
