@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import API from "../../utils/API";
-import { useNavigate } from "react-router-dom";
-import './Legacies.css';
+import { useNavigate, Outlet } from "react-router-dom";
+import './AllLegacies.css';
 import Loading from "../../components/Loading/Loading";
 
-function Legacies({ authState }) {
+function AllLegacies({ authState }) {
 
     // Adding useNavigate
     const navigate = useNavigate();
 
+    // redirect to login function
     const redirectToLogin = (e) => {
         e.preventDefault();
 
@@ -16,7 +17,7 @@ function Legacies({ authState }) {
     }
 
     const goToLegacy = (id) => {
-        navigate(`/sims4legacies/legacy/${id}`)
+        navigate(`/legacies/${id}`)
     }
 
     const [legacies, setLegacies] = useState([])
@@ -34,19 +35,21 @@ function Legacies({ authState }) {
         getLegacies();
     }, [authState])
 
-    if (authState.isLoading) {
+
+    if (!authState.isLoading && !authState.isLoggedIn) {
         return (
             <main>
-                <Loading />
+                <h1>Please login to see your sims 4 Legacy</h1>
+                <button onClick={redirectToLogin}>login</button>
             </main>
         )
     } else if (authState.isLoggedIn) {
         return (
             <main>
-                <h1>All your sims 4 legacies: </h1>
+                <h2>Your legacies:</h2>
                 <div>
                     <div>
-                        <h2>Start a new Legacy</h2>
+                        <h3>Start a new Legacy</h3>
                         <button>+</button>
                     </div>
                     {legacies.map((legacy, index) => {
@@ -66,21 +69,22 @@ function Legacies({ authState }) {
                                 <p>Current Heir: {currentHeir}</p>
                                 {legacy.extremeStart && <p>Extreme Start</p>}
                                 {legacy.ultraExtremeStart && <p>Ultra Extreme Start</p>}
-                                <button onClick={() => {goToLegacy(legacy.id)}}>View</button>
+                                <button onClick={() => { goToLegacy(legacy.id) }}>View</button>
                             </div>
                         )
                     })}
                 </div>
+
+                <Outlet />
             </main>
         )
     } else {
         return (
             <main>
-                <h1>Please login to see your sims 4 legacies</h1>
-                <button onClick={redirectToLogin}>login</button>
+                <Loading />
             </main>
         )
     }
 }
 
-export default Legacies;
+export default AllLegacies;

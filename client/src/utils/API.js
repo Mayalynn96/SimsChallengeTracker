@@ -63,6 +63,17 @@ const API = {
             }
         });
         return await res.json();
+    },
+    createLegacy: async (legacyObject, token) => {
+        const res = await fetch(`${URL_PREFIX}/api/legacies`, {
+            method: "POST",
+            body: JSON.stringify(legacyObject),
+            headers: {
+                "Content-Type": "application/json",
+                "authorization": `Bearer ${token}`
+            }
+        })
+        return await res.json()
     }
 }
 
