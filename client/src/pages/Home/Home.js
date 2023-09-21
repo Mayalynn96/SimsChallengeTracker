@@ -10,33 +10,9 @@ function Home({ authState }) {
     const navigate = useNavigate();
 
     // redirect to login function
-    const redirectToLogin = (e) => {
-        e.preventDefault();
-
-        navigate("/login");
+    const redirectTo = (destination) => {
+        navigate(`/${destination}`);
     }
-
-    // redirect to legacies function
-    const redirectToLegacies = (e) => {
-        e.preventDefault();
-
-        navigate("/allLegacies");
-    }
-
-    const [legacies, setLegacies] = useState([])
-
-    useEffect(() => {
-        // get legacies if user is logged in
-        const getLegacies = async () => {
-            if(authState.isLoggedIn){
-                const userLegacies = await API.getUserLegacies(3, authState.token)
-                setLegacies(userLegacies);
-                return console.log(userLegacies)
-            }
-        };
-
-        getLegacies();
-    }, [authState])
 
     if (authState.isLoading) {
         return (
@@ -49,18 +25,8 @@ function Home({ authState }) {
             <main>
                 <h1>Welcome {authState.userData.username}</h1>
                 <div>
-                    <h2>Your Legacies</h2>
-                    {legacies.map((legacy, index) => {
-                        return (
-                            <div key={index}>
-                                <h3>{legacy.name.toUpperCase()} Legacy</h3>
-                                <p>Generation: {legacy.generation}</p>
-                                <p>Number of Sims: {legacy.Sims.length}</p>
-                                <button>View</button>
-                            </div>
-                        )
-                    })}
-                    <button onClick={redirectToLegacies}>See All</button>
+                    <button onClick={() => {redirectTo("legacies/new")}}>New Legacy</button>
+                    <button onClick={() => {redirectTo("legacies")}}>All Legacies</button>
                 </div>
             </main>
         )
@@ -68,7 +34,8 @@ function Home({ authState }) {
         return (
             <main>
                 <h1>Welcome!</h1>
-                <button onClick={redirectToLogin}>login</button>
+                <p>The Sims Challenge Tracker for Sims 4 is your ultimate companion for tracking and managing points in the popular Sims 4 Legacy Challenge. This user-friendly web application offers a seamless experience for Simmers of all levels, helping you keep score and stay on top of your Legacy Challenge journey.</p>
+                <button onClick={() => {redirectTo("login")}}>login</button>
             </main>
         )
     }

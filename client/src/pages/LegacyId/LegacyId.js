@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import API from "../../utils/API";
 import { useNavigate, useParams } from "react-router-dom";
-import './Legacy.css';
+import './LegacyId.css';
 import Loading from "../../components/Loading/Loading";
 
-function Legacy({ authState }) {
+function LegacyId({ authState }) {
 
     // Adding useNavigate
     const navigate = useNavigate();
@@ -60,14 +60,14 @@ function Legacy({ authState }) {
         }
     }
 
-    if (authState.isLoading) {
+    if (!authState.isLoading && !authState.isLoggedIn) {
         return (
             <main>
-                <Loading />
+                <h1>Please login to see your sims 4 Legacy</h1>
+                <button onClick={redirectToLogin}>login</button>
             </main>
         )
     } else if (authState.isLoggedIn && legacy.name) {
-
         return (
             <main>
                 <div>
@@ -83,11 +83,10 @@ function Legacy({ authState }) {
     } else {
         return (
             <main>
-                <h1>Please login to see your sims 4 Legacy</h1>
-                <button onClick={redirectToLogin}>login</button>
+                <Loading />
             </main>
         )
     }
 }
 
-export default Legacy;
+export default LegacyId;

@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import API from './utils/API';
 import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
-import Legacies from "./pages/Legacies/Legacies";
-import Legacy from "./pages/Legacy/Legacy";
+import Legacies from "./pages/Legacy/Legacies";
 import NotFound from "./components/NotFound/NotFound";
 import './App.css';
 import Header from "./components/Header/Header";
+import NewLegacy from "./pages/NewLegacy/NewLegacy";
+import LegacyId from "./pages/LegacyId/LegacyId";
+import AllLegacies from "./pages/AllLegacies/AllLegacies";
 
 function App() {
   const [authState, setAuthState] = useState({
@@ -54,17 +56,20 @@ function App() {
   }, []);
 
   return (
-    <BrowserRouter>
-    <Header authState={authState} setAuthState={setAuthState}/>
+    <Router>
+      <Header authState={authState} setAuthState={setAuthState} />
       <Routes>
-          <Route index element={<Home authState={authState} />} />
-          <Route path="/home" element={<Home authState={authState} />} />
-          <Route path="/login" element={<Login setAuthState={setAuthState} />} />
-          <Route path="/allLegacies" element={<Legacies authState={authState} />} />
-          <Route path="/legacy/:legacyId" element={<Legacy authState={authState} />} />
-          <Route path="*" element={<NotFound />} />
+        <Route index element={<Home authState={authState} />} />
+        <Route path="home" element={<Home authState={authState} />} />
+        <Route path="login" element={<Login setAuthState={setAuthState} />} />
+        <Route path="legacies" element={<Legacies authState={authState} />}>
+          <Route index element={<AllLegacies authState={authState} /> }/>
+          <Route path=":legacyId" element={<LegacyId authState={authState} />} />
+          <Route path="new" element={<NewLegacy authState={authState} />}/>
+        </Route>
+        <Route path="*" element={<NotFound />} />
       </Routes>
-    </BrowserRouter>
+    </Router>
   );
 }
 

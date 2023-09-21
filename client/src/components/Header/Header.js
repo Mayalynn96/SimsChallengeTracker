@@ -21,9 +21,8 @@ function Header({ authState, setAuthState }) {
     const navigate = useNavigate();
 
     // redirect to legacies function
-    const redirectToLegacies = (e) => {
-        e.preventDefault();
-        navigate("/allLegacies");
+    const redirectTo = (destination) => {
+        navigate(`/${destination}`);
     }
 
     // redirect to Home function
@@ -36,14 +35,13 @@ function Header({ authState, setAuthState }) {
     return (
         <header>
             <div>
-                <button onClick={redirectToLegacies}>All legacies</button>
+                {authState.isLoggedIn && <button onClick={() => { redirectTo("Home") }}>Home</button>}
             </div>
             <div>
                 <h1>Sims Challenge Tracker</h1>
             </div>
             <div>
                 {authState.isLoggedIn && <button onClick={handleLogout}>Logout</button>}
-                <button onClick={redirectToHome}>Home</button>
             </div>
         </header>
     )
