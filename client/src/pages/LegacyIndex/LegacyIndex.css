@@ -1,0 +1,29 @@
+.legacyIndexImg {
+    height: 100px;
+}
+
+#legacyIndexContainer {
+    display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+    margin: auto;
+}
+
+#legacyIndexContainer div {
+    text-align: center;
+    border: 2px solid grey;
+    border-radius: 10px;
+    margin: 25px 50px;
+    width: 130px;
+    height: 130px;
+    cursor: pointer;
+    user-select: none;
+}
+
+#legacyIndexContainer div:hover {
+    background-color: rgb(228, 228, 228);
+}
+
+#legacyIndexContainer div:active {
+    background-color: rgb(141, 138, 138);
+}
