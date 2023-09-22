@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate, useOutletContext } from "react-router-dom";
+import { useNavigate, useOutletContext, Outlet } from "react-router-dom";
 import './Family.css';
 
 function Family() {
@@ -9,13 +9,17 @@ function Family() {
     const navigate = useNavigate();
 
     return (
-        <main>
-            <button onClick={() => { navigate(`/legacies/${currentLegacy.id}`) }}>Change section</button>
-            <h1>Family</h1>
-            <div>
-
+        <div>
+            <div id='allLegacyBtn'>
+                <button onClick={() => { navigate(`/legacies/${currentLegacy.id}`) }}>Change section</button>
             </div>
-        </main>
+            <div id='familyBanner'>
+                <button onClick={() => { navigate(`/legacies/${currentLegacy.id}/family/addSim`) }}>+</button>
+                <h1>Family</h1>
+                <button onClick={() => { navigate(`/legacies/${currentLegacy.id}/family`) }}>All</button>
+            </div>
+            <Outlet context={[currentLegacy]} />
+        </div>
     )
 
 }

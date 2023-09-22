@@ -9,8 +9,10 @@ function Overview() {
     const navigate = useNavigate();
 
     return (
-        <main>
-            <button onClick={() => { navigate(`/legacies/${currentLegacy.id}`) }}>Change section</button>
+        <div>
+            <div id='allLegacyBtn'>
+                <button onClick={() => { navigate(`/legacies/${currentLegacy.id}`) }}>Change section</button>
+            </div>
             <h1>Overview</h1>
             <div>
                 <h2>Laws</h2>
@@ -19,7 +21,7 @@ function Overview() {
                 <p>Heir Law: {currentLegacy.heirLaw}</p>
                 <p>Species Law: {currentLegacy.speciesLaw}</p>
             </div>
-        </main>
+        </div>
     )
 
 }

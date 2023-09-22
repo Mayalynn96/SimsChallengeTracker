@@ -11,3 +11,14 @@
   --lightGreen: #c4FFc1;
   --cream: #F6F7F5;
 }
+
+#allLegacyBtn {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+#allLegacyBtn button {
+  width: 120px;
+  height: 30px;
+  font-weight: bold;
+}

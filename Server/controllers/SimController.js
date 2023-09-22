@@ -59,6 +59,11 @@ router.post("/", async (req, res) => {
 
         const newSim = await Sim.create(newSimBody);
 
+        if(legacyData.generation < newSim.generation){
+            legacyData.generation = newSim.generation
+            await legacyData.save()
+        }
+
         res.status(201).json({ message: "Sim creation successful", data: newSim });
     } catch (err) {
         res.status(500).json({ message: "Error adding Sim.", error: err.toString() });

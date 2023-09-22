@@ -74,6 +74,17 @@ const API = {
             }
         })
         return await res.json()
+    },
+    createSim: async (simObject, token) => {
+        const res = await fetch(`${URL_PREFIX}/api/sims`, {
+            method: "POST",
+            body: JSON.stringify(simObject),
+            headers: {
+                "Content-Type": "application/json",
+                "authorization": `Bearer ${token}`
+            }
+        })
+        return await res.json()
     }
 }
 
