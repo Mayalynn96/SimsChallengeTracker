@@ -1,0 +1,9 @@
+#familyBanner {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#familyBanner button {
+    width: 50px;
+    font-weight: bold;
+}

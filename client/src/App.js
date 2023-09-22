@@ -13,6 +13,9 @@ import AllLegacies from "./pages/AllLegacies/AllLegacies";
 import LegacyIndex from "./pages/LegacyIndex/LegacyIndex";
 import Overview from "./pages/Overview/Overview";
 import Family from "./pages/Family/Family";
+import AllSims from "./pages/AllSims/AllSims";
+import AddSim from "./pages/AddSim/AddSim";
+import Sim from "./pages/Sim/Sim";
 
 function App() {
   const [authState, setAuthState] = useState({
@@ -71,7 +74,11 @@ function App() {
           <Route path=":legacyId" element={<LegacyId authState={authState} />}>
             <Route index element={<LegacyIndex />} />
             <Route path="overview" element={<Overview />} />
-            <Route path="family" element={<Family/>} />
+            <Route path="family" element={<Family/>}>
+              <Route index element={<AllSims />}/>
+              <Route path="addSim" element={<AddSim authState={authState}/>} />
+              <Route path=":simId" element={<Sim />} />
+            </Route>
           </Route>
         </Route>
         <Route path="*" element={<NotFound />} />
