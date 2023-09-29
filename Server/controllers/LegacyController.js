@@ -3,7 +3,8 @@ const router = express.Router();
 
 const {
     Legacy,
-    Sim
+    Sim,
+    PointsSheet
 } = require('../models')
 
 const jwt = require("jsonwebtoken");
@@ -67,7 +68,7 @@ router.get("/legacy/:legacyId", async (req, res) => {
         const tokenData = jwt.verify(token, process.env.JWT_SECRET);
 
         const legacyData = await Legacy.findByPk(req.params.legacyId, {
-            include: Sim
+            include: [Sim, PointsSheet]
         })
 
         if(!legacyData){
@@ -103,8 +104,12 @@ router.post("/", async (req, res) => {
             bloodlineLaw: req.body.bloodlineLaw,
             heirLaw: req.body.heirLaw,
             speciesLaw: req.body.speciesLaw,
-            UserId: tokenData.id
+            UserId: tokenData.id,
         });
+
+        const newPointsSheet = await PointsSheet.create({
+            LegacyId: newLegacy.id
+        })
 
         res.status(201).json({message: "Legacy creation successful", data: newLegacy});
     } catch (err) {

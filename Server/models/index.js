@@ -6,12 +6,16 @@ const Trait = require('./Trait');
 const Legacy = require('./Legacy');
 const Sim = require('./Sim');
 const Skill = require('./Skill');
+const PointsSheet = require('./PointsSheet')
 
 Sim.belongsTo(Legacy);
 Legacy.hasMany(Sim);
 
 Legacy.belongsTo(User);
 User.hasMany(Legacy);
+
+Legacy.hasOne(PointsSheet);
+PointsSheet.belongsTo(Legacy);
 
 Career.belongsTo(Pack);
 Pack.hasMany(Career);
@@ -33,5 +37,6 @@ module.exports = {
     Trait,
     Legacy,
     Sim,
-    Skill
+    Skill,
+    PointsSheet
 };
