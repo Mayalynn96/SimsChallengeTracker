@@ -32,6 +32,13 @@ Sim.init({
             isIn: [["Current Heir", "Previous Heir", "Next Heir", "Eligible", "Ineligible"]]
         }
     },
+    lifeStage: {
+        type: DataTypes.STRING,
+        allowNull:false,
+        validate: {
+            isIn: [["Baby", "Infant", "Toddler", "Child", "Teen", "Young Adult", "Adult", "Elder"]]
+        }
+    },
     isAlive: {
         type: DataTypes.BOOLEAN,
         allowNull: false,

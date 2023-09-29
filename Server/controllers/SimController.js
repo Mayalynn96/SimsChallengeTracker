@@ -3,10 +3,51 @@ const router = express.Router();
 
 const {
     Sim,
-    Legacy
+    Legacy,
+    PointsSheet
 } = require('../models')
 
 const jwt = require("jsonwebtoken");
+
+const updatePointSheet = async (legacyId) => {
+
+    const updatedLegacyData = await Legacy.findByPk(legacyId, { include: [Sim, PointsSheet] });
+
+    var tenChildrenAchieved = false;
+
+    var youngAdultHeirs = 0
+
+    const lifeStages = ["Young Adult", "Adult", "Elder"]
+
+    var numberOfPoints = youngAdultHeirs
+
+    for (let i = 1; i < 10; i++) {
+        var children = 0
+
+        updatedLegacyData.Sims.forEach(sim => {
+            if (sim.generation === i && (sim.relationToHeir === "Heir" || sim.relationToHeir === "Child")) {
+                children++
+            }
+            if (sim.generation === i && sim.relationToHeir === "Heir" && lifeStages.includes(sim.lifeStage)) {
+                youngAdultHeirs++
+            }
+        });
+
+        if (children >= 10) {
+            tenChildrenAchieved = true;
+        };
+
+    };
+
+    if (tenChildrenAchieved) {
+        numberOfPoints = youngAdultHeirs + 1;
+    } else {
+        numberOfPoints = youngAdultHeirs;
+    };
+
+    updatedLegacyData.PointsSheet.family = numberOfPoints;
+    await updatedLegacyData.PointsSheet.save()
+}
 
 // Getting all Sims
 router.get("/", async (req, res) => {
@@ -28,7 +69,7 @@ router.post("/", async (req, res) => {
     try {
         const tokenData = jwt.verify(token, process.env.JWT_SECRET);
 
-        const legacyData = await Legacy.findByPk(req.body.LegacyId, {include: Sim});
+        const legacyData = await Legacy.findByPk(req.body.LegacyId, { include: [Sim, PointsSheet] });
 
         if (!legacyData) {
             return res.status(404).json({ message: "Legacy not found" });
@@ -38,7 +79,7 @@ router.post("/", async (req, res) => {
 
         var isFounder = false;
 
-        if (legacyData.Sims.length < 1){
+        if (legacyData.Sims.length < 1) {
             isFounder = true
         }
 
@@ -54,20 +95,24 @@ router.post("/", async (req, res) => {
             isAdopted: req.body.isAdopted,
             // relation to heir needs to be be validated (only one heir and primary spouse for each generation)
             relationToHeir: req.body.relationToHeir,
-            LegacyId: legacyData.id
+            LegacyId: legacyData.id,
+            lifeStage: req.body.lifeStage
         }
 
         const newSim = await Sim.create(newSimBody);
 
-        if(legacyData.generation < newSim.generation){
+        if (legacyData.generation < newSim.generation) {
             legacyData.generation = newSim.generation
             await legacyData.save()
         }
+
+        updatePointSheet(legacyData.id);
 
         res.status(201).json({ message: "Sim creation successful", data: newSim });
     } catch (err) {
         res.status(500).json({ message: "Error adding Sim.", error: err.toString() });
     }
 })
+
 
 module.exports = router;
