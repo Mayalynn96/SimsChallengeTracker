@@ -63,6 +63,10 @@ Sim.init({
         validate: {
             isIn: [["Heir", "Primary Spouse", "Spouse", "Child"]]
         }
+    },
+    causeOfDeath: {
+        type: DataTypes.STRING,
+        defaultValue: null
     }
 }, {
     sequelize
