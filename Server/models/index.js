@@ -29,6 +29,9 @@ Pack.hasMany(Trait);
 Skill.belongsTo(Pack);
 Pack.hasMany(Skill);
 
+Trait.belongsToMany(Sim, {through: "simTraits"});
+Sim.belongsToMany(Trait, {through: "simTraits"});
+
 module.exports = {
     User,
     Pack,

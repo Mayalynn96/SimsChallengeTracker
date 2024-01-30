@@ -16,7 +16,12 @@ function LegacyId({ authState }) {
             if (authState.isLoggedIn) {
                 const userLegacy = await API.getLegacyById(legacyId, authState.token)
                 setLegacy(userLegacy);
-                setLegacyPoints(userLegacy.PointsSheet.family)
+                console.log(userLegacy)
+                if(userLegacy.msg){
+                    return
+                } else {
+                    setLegacyPoints(userLegacy.PointsSheet.family)
+                }
                 return
             }
         };
@@ -33,6 +38,12 @@ function LegacyId({ authState }) {
                 <p> {legacyPoints} | Gen {legacy.generation} | {legacy.Sims.length} Sims</p>
                 </section>
                 <Outlet context={[legacy]} />
+            </main>
+        )
+    } else if(legacy.msg){
+        return (
+            <main>
+                <p>{legacy.msg}</p>
             </main>
         )
     } else {

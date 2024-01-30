@@ -16,6 +16,11 @@ Trait.init({
         type: DataTypes.STRING,
         allowNull:false
     },
+    age: {
+        type: DataTypes.STRING,
+        allowNull:false,
+        defaultValue: "Adult"
+    },
     image: {
         type: DataTypes.STRING,
         allowNull:false,

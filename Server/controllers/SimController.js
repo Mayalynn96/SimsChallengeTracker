@@ -4,7 +4,8 @@ const router = express.Router();
 const {
     Sim,
     Legacy,
-    PointsSheet
+    PointsSheet,
+    Trait
 } = require('../models')
 
 const jwt = require("jsonwebtoken");
@@ -69,7 +70,7 @@ router.get("/sim/:simId", async (req, res) => {
         const tokenData = jwt.verify(token, process.env.JWT_SECRET);
 
         const simData = await Sim.findByPk(req.params.simId,{
-            include: [{model: Legacy, attributes: ["UserId"]}]
+            include: [{model: Legacy, attributes: ["UserId"]}, Trait]
         })
 
         if(!simData){
@@ -123,10 +124,12 @@ router.post("/", async (req, res) => {
             // relation to heir needs to be be validated (only one heir and primary spouse for each generation)
             relationToHeir: req.body.relationToHeir,
             LegacyId: legacyData.id,
-            lifeStage: req.body.lifeStage
+            lifeStage: req.body.lifeStage,
         }
 
         const newSim = await Sim.create(newSimBody);
+
+        newSim.setTraits(req.body.traits);
 
         if (legacyData.generation < newSim.generation) {
             legacyData.generation = newSim.generation

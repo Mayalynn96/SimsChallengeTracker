@@ -39,6 +39,11 @@ Legacy.init({
         allowNull:false,
         defaultValue: 0
     },
+    veterinaryFunds: {
+        type: DataTypes.INTEGER,
+        allowNull:false,
+        defaultValue: 0
+    },
     genderLaw: {
         type: DataTypes.STRING,
         allowNull:false,
