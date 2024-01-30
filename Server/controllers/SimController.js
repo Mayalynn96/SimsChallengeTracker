@@ -60,6 +60,33 @@ router.get("/", async (req, res) => {
     }
 })
 
+// Get sim by id
+router.get("/sim/:simId", async (req, res) => {
+    const token = req.headers?.authorization?.split(" ")[1];
+    if (!token) {
+        return res.status(403).json({ msg: "you must be logged in to get this Sim." });
+    } try {
+        const tokenData = jwt.verify(token, process.env.JWT_SECRET);
+
+        const simData = await Sim.findByPk(req.params.simId,{
+            include: [{model: Legacy, attributes: ["UserId"]}]
+        })
+
+        if(!simData){
+            return res.status(404).json({ msg: "No sim under this Id." });
+        }
+
+        if(tokenData.id !== simData.Legacy.UserId){
+            return res.status(403).json({ msg: "This sim doesn't belong to you." });
+        }
+
+        res.json(simData)
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Error getting this sim.", error: err });
+    }
+})
+
 // Adding new Sim
 router.post("/", async (req, res) => {
     const token = req.headers?.authorization?.split(" ")[1];
