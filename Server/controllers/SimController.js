@@ -28,7 +28,7 @@ const updatePointSheet = async (legacyId) => {
             if (sim.generation === i && (sim.relationToHeir === "Heir" || sim.relationToHeir === "Child")) {
                 children++
             }
-            if (sim.generation === i && sim.relationToHeir === "Heir" && lifeStages.includes(sim.lifeStage)) {
+            if (sim.generation === i && (sim.relationToHeir === "Heir" && lifeStages.includes(sim.lifeStage))) {
                 youngAdultHeirs++
             }
         });

@@ -6,6 +6,7 @@ import Loading from "../../components/Loading/Loading";
 
 function LegacyId({ authState }) {
     const [legacy, setLegacy] = useState([]);
+    const [legacyPoints, setLegacyPoints] = useState(0);
 
     const { legacyId } = useParams();
 
@@ -15,6 +16,7 @@ function LegacyId({ authState }) {
             if (authState.isLoggedIn) {
                 const userLegacy = await API.getLegacyById(legacyId, authState.token)
                 setLegacy(userLegacy);
+                setLegacyPoints(userLegacy.PointsSheet.family)
                 return
             }
         };
@@ -28,7 +30,7 @@ function LegacyId({ authState }) {
             <main>
                 <section id='legacyBanner'>
                 <h2 style={{ textTransform: 'capitalize' }}>{legacy.name} Legacy</h2>
-                <p>0 Points | Gen {legacy.generation} | {legacy.Sims.length} Sims</p>
+                <p> {legacyPoints} | Gen {legacy.generation} | {legacy.Sims.length} Sims</p>
                 </section>
                 <Outlet context={[legacy]} />
             </main>

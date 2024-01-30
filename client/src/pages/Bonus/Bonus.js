@@ -1,8 +1,8 @@
 import React from 'react';
 import { useNavigate, useOutletContext } from "react-router-dom";
-import './Overview.css';
+import './Bonus.css';
 
-function Overview() {
+function Bonus() {
     const [currentLegacy] = useOutletContext()
 
     // Adding useNavigate
@@ -13,17 +13,13 @@ function Overview() {
             <div id='allLegacyBtn'>
                 <button onClick={() => { navigate(`/legacies/${currentLegacy.id}`) }}>Go Back</button>
             </div>
-            <h1>Overview</h1>
+            <h1>Bonus</h1>
             <div>
-                <h2>Laws</h2>
-                <p>Gender Law: {currentLegacy.genderLaw}</p>
-                <p>Bloodline Law: {currentLegacy.bloodlineLaw}</p>
-                <p>Heir Law: {currentLegacy.heirLaw}</p>
-                <p>Species Law: {currentLegacy.speciesLaw}</p>
+
             </div>
         </div>
     )
 
 }
 
-export default Overview;
+export default Bonus;
