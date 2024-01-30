@@ -8,33 +8,33 @@ function AllSims() {
     // Adding useNavigate
     const navigate = useNavigate();
 
-    const generations = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
-
     return (
         <div>
             <h3>All Sims</h3>
-            {generations.map(gen => {
-            if(gen <= currentLegacy.generation){
-                return (
-                    <div key={gen}>
-                        <h4>Genreration {gen}</h4>
-                        {currentLegacy.Sims.map(sim => {
-                            if (sim.generation === gen) {
-                                return (
-                                    <div key={sim.id}>
-                                        <p>{sim.firstName} {sim.lastName}</p>
-                                    </div>
-                                )
-                            } else {
-                                return null
-                            }
-                        })}
-                    </div>
-                )
-            } else {
-                return null
-            }
-        })}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Generation</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Lifestage</th>
+                        <th>gender</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {currentLegacy.Sims.map((sim, index) => {
+                        return (
+                            <tr key={index} className='simRow' onClick={() => {navigate(`/legacies/${currentLegacy.id}/family/${sim.id}`)}}>
+                                <td>{sim.generation}</td>
+                                <td>{sim.firstName}</td>
+                                <td>{sim.lastName}</td>
+                                <td>{sim.lifeStage}</td>
+                                <td>{sim.gender}</td>
+                            </tr>
+                        )
+                    })}
+                </tbody>
+            </table>
         </div>
     )
 

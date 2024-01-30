@@ -12,10 +12,21 @@ import LegacyId from "./pages/LegacyId/LegacyId";
 import AllLegacies from "./pages/AllLegacies/AllLegacies";
 import LegacyIndex from "./pages/LegacyIndex/LegacyIndex";
 import Overview from "./pages/Overview/Overview";
+import Creative from "./pages/Creative/Creative";
 import Family from "./pages/Family/Family";
+import Love from "./pages/Love/Love";
+import Knowledge from "./pages/Knowledge/Knowledge";
 import AllSims from "./pages/AllSims/AllSims";
 import AddSim from "./pages/AddSim/AddSim";
 import Sim from "./pages/Sim/Sim";
+import Fortune from "./pages/Fortune/Fortune";
+import Athletic from "./pages/Athletic/Athletic";
+import Nature from "./pages/Nature/Nature";
+import Food from "./pages/Food/Food";
+import Popularity from "./pages/Popularity/Popularity";
+import Deviance from "./pages/Deviance/Deviance";
+import Penalties from "./pages/Penalties/Penalties";
+import Bonus from "./pages/Bonus/Bonus";
 
 function App() {
   const [authState, setAuthState] = useState({
@@ -77,8 +88,19 @@ function App() {
             <Route path="family" element={<Family/>}>
               <Route index element={<AllSims />}/>
               <Route path="addSim" element={<AddSim authState={authState}/>} />
-              <Route path=":simId" element={<Sim />} />
+              <Route path=":simId" element={<Sim authState={authState}/>} />
             </Route>
+            <Route path="creative" element={<Creative />} />
+            <Route path="fortune" element={<Fortune />} />
+            <Route path="love" element={<Love />} />
+            <Route path="knowledge" element={<Knowledge />} />
+            <Route path="athletic" element={<Athletic />} />
+            <Route path="nature" element={<Nature />} />
+            <Route path="food" element={<Food />} />
+            <Route path="popularity" element={<Popularity />} />
+            <Route path="deviance" element={<Deviance />} />
+            <Route path="penalties" element={<Penalties />} />
+            <Route path="bonus" element={<Bonus />} />
           </Route>
         </Route>
         <Route path="*" element={<NotFound />} />
